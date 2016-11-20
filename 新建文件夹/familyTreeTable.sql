@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/11/14 23:05:37                          */
+/* Created on:     2016/11/20 19:23:31                          */
 /*==============================================================*/
 
 
@@ -8,7 +8,13 @@ drop table if exists family_news;
 
 drop table if exists person_img;
 
+drop table if exists tbl_Family_book;
+
+drop table if exists tbl_area;
+
 drop table if exists tbl_bank_card_info;
+
+drop table if exists tbl_city;
 
 drop table if exists tbl_classes;
 
@@ -35,6 +41,8 @@ drop table if exists tbl_person_privateInfo;
 drop table if exists tbl_person_say;
 
 drop table if exists tbl_proposal;
+
+drop table if exists tbl_province;
 
 drop table if exists tbl_tree_node;
 
@@ -73,6 +81,33 @@ create table person_img
 alter table person_img comment '头像信息';
 
 /*==============================================================*/
+/* Table: tbl_Family_book                                       */
+/*==============================================================*/
+create table tbl_Family_book
+(
+   id                   numeric(10,0) comment 'id',
+   code                 varchar(30) comment '编码',
+   name                 varchar(30) comment '姓',
+   orderNum             numeric(10,0) comment '排序'
+);
+
+alter table tbl_Family_book comment '百家姓';
+
+/*==============================================================*/
+/* Table: tbl_area                                              */
+/*==============================================================*/
+create table tbl_area
+(
+   id                   numeric(10,0) not null comment 'id',
+   areaID               numeric(10,0) comment 'areaID',
+   area                 numeric(10,0) comment 'area',
+   fatherID             numeric(10,0) comment 'fatherID',
+   primary key (id)
+);
+
+alter table tbl_area comment '县区';
+
+/*==============================================================*/
 /* Table: tbl_bank_card_info                                    */
 /*==============================================================*/
 create table tbl_bank_card_info
@@ -84,6 +119,20 @@ create table tbl_bank_card_info
 );
 
 alter table tbl_bank_card_info comment '银行卡信息';
+
+/*==============================================================*/
+/* Table: tbl_city                                              */
+/*==============================================================*/
+create table tbl_city
+(
+   id                   numeric(10,0) not null comment 'id',
+   cityID               numeric(10,0) comment '城市id',
+   city                 varchar(50) comment '城市名称',
+   fatherID             numeric(10,0) comment 'fatherID',
+   primary key (id)
+);
+
+alter table tbl_city comment '城市';
 
 /*==============================================================*/
 /* Table: tbl_classes                                           */
@@ -163,16 +212,18 @@ alter table tbl_family_photo comment '家谱照片';
 /*==============================================================*/
 create table tbl_message
 (
-   id                   numeric(10,0) not null,
-   id_card              char(18),
-   family_id            numeric(10,0),
-   content              varchar(100),
-   type                 varchar(1),
-   is_look              varchar(1),
-   create_time          date,
-   update_time          date,
+   id                   numeric(10,0) not null comment 'id',
+   id_card              char(18) comment '身份证',
+   family_id            numeric(10,0) comment '家谱id',
+   content              varchar(100) comment '内容',
+   type                 varchar(1) comment '提示类型（1加入邀请，2乐家信息抓取申请，3拒绝提醒，4同意提醒）',
+   is_look              varchar(1) comment '是否查看信息',
+   create_time          date comment '创建时间',
+   update_time          date comment '修改时间',
    primary key (id)
 );
+
+alter table tbl_message comment '消息';
 
 /*==============================================================*/
 /* Table: tbl_person_album                                      */
@@ -181,11 +232,11 @@ create table tbl_person_album
 (
    id                   numeric(10,0) not null comment 'id',
    user_id              numeric(10,0) comment '用户id',
-   highlight_id         numeric(10,0),
-   name                 varchar(30),
-   order_num            numeric(10,0),
-   create_time          date,
-   update_time          date,
+   highlight_id         numeric(10,0) comment '封面图片id',
+   name                 varchar(30) comment '相册名称',
+   order_num            numeric(10,0) comment '排序',
+   create_time          date comment '创建时间',
+   update_time          date comment '修改时间',
    primary key (id)
 );
 
@@ -215,15 +266,17 @@ alter table tbl_person_baseInfo comment '个人基本信息表';
 /*==============================================================*/
 create table tbl_person_journal
 (
-   id                   numeric(10,0) not null,
-   user_id              numeric(10,0),
-   title                varchar(50),
-   content              longtext,
-   img                  longtext,
-   create_time          date,
-   update_time          date,
+   id                   numeric(10,0) not null comment 'id',
+   user_id              numeric(10,0) comment '用户id',
+   title                varchar(50) comment '标题',
+   content              longtext comment '内容',
+   img                  longtext comment '图片(多个图片用'',''分割)',
+   create_time          date comment '创建时间',
+   update_time          date comment '修改时间',
    primary key (id)
 );
+
+alter table tbl_person_journal comment '日志';
 
 /*==============================================================*/
 /* Table: tbl_person_lifeInfo                                   */
@@ -254,16 +307,18 @@ alter table tbl_person_lifeInfo comment '其他个人信息-生活信息';
 /*==============================================================*/
 create table tbl_person_photo
 (
-   id                   numeric(10,0) not null,
-   user_id              numeric(10,0),
-   person_album_id      numeric(10,0),
-   name                 varchar(30),
-   "describe"           varchar(200),
-   img                  varchar(128),
-   upload_date          date,
-   update_time          date,
+   id                   numeric(10,0) not null comment 'id',
+   user_id              numeric(10,0) comment '用户id',
+   person_album_id      numeric(10,0) comment '相册id',
+   name                 varchar(30) comment '名称',
+   "describe"           varchar(200) comment '描述',
+   img                  varchar(128) comment '图片路劲',
+   upload_date          date comment '上传时间',
+   update_time          date comment '修改时间',
    primary key (id)
 );
+
+alter table tbl_person_photo comment '相册图片';
 
 /*==============================================================*/
 /* Table: tbl_person_privateInfo                                */
@@ -290,14 +345,16 @@ alter table tbl_person_privateInfo comment '其他个人信息-私人信息';
 /*==============================================================*/
 create table tbl_person_say
 (
-   id                   numeric(10,0) not null,
-   user_id              numeric(10,0),
-   content              varchar(200),
-   img                  longtext,
-   create_time          date,
-   update_time          date,
+   id                   numeric(10,0) not null comment 'id',
+   user_id              numeric(10,0) comment '用户id',
+   content              varchar(200) comment '内容',
+   img                  longtext comment '图片(多个图片用'',''分割)',
+   create_time          date comment '创建时间',
+   update_time          date comment '修改时间',
    primary key (id)
 );
+
+alter table tbl_person_say comment '说说';
 
 /*==============================================================*/
 /* Table: tbl_proposal                                          */
@@ -312,6 +369,19 @@ create table tbl_proposal
 );
 
 alter table tbl_proposal comment '用户建议表';
+
+/*==============================================================*/
+/* Table: tbl_province                                          */
+/*==============================================================*/
+create table tbl_province
+(
+   id                   numeric(10,0) not null comment 'id',
+   provinceID           numeric(10,0) comment '省份id',
+   province             varchar(50) comment '省份名称',
+   primary key (id)
+);
+
+alter table tbl_province comment '省份';
 
 /*==============================================================*/
 /* Table: tbl_tree_node                                         */
