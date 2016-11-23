@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/11/20 19:23:31                          */
+/* Created on:     2016/11/21 21:06:47                          */
 /*==============================================================*/
 
 
@@ -85,10 +85,13 @@ alter table person_img comment 'Õ∑œÒ–≈œ¢';
 /*==============================================================*/
 create table tbl_Family_book
 (
-   id                   numeric(10,0) comment 'id',
+   id                   numeric(10,0) not null comment 'id',
    code                 varchar(30) comment '±‡¬Î',
    name                 varchar(30) comment '–’',
-   orderNum             numeric(10,0) comment '≈≈–Ú'
+   name_ens             varchar(50),
+   name_en              varchar(30),
+   orderNum             numeric(10,0) comment '≈≈–Ú',
+   primary key (id)
 );
 
 alter table tbl_Family_book comment '∞Ÿº“–’';
