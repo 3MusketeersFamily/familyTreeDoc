@@ -1,0 +1,15 @@
+ps -ef | grep mysql 
+进入sql
+mysql -u master -p
+输入密码
+show variables like 'character_set_%';
+
+show variables like 'collation_%';
+
+
+default-character-set=utf8
+set character_set_filesystem=utf8;
+等等
+
+已经建立的表编码格式不会变
+需要手动修改
